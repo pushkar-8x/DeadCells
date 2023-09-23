@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveState : PlayerState
+public class PlayerMoveState : PlayerGroundedState
 {
-    public PlayerMoveState(PlayerStateMachine playerStateMachine, Player player, string animBoolName) : base(playerStateMachine, player, animBoolName)
+    public PlayerMoveState(PlayerStateMachine stateMachine, Player player, string animBoolName) : base(stateMachine, player, animBoolName)
     {
     }
 
@@ -19,10 +19,10 @@ public class PlayerMoveState : PlayerState
     {
         base.Update();
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            playerStateMachine.SwitchState(player.idleState);
-        }
+        player.SetVelocity(xInput * player.MoveSpeed , rb.velocity.y);
+
+        if (xInput == 0)
+            stateMachine.SwitchState(player.idleState);
     }
 
     public override void Exit()
