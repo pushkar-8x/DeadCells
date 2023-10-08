@@ -12,6 +12,7 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.SetVelocity(0f, 0f);
 
     }
 
@@ -20,6 +21,9 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
+
+        if (xInput == player.faceDirection && player.IsTouchingWall())
+            return;
 
         if (xInput != 0)
             stateMachine.SwitchState(player.moveState);
