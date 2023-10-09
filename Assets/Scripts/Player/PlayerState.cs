@@ -15,6 +15,7 @@ public class PlayerState
     protected float xInput;
     protected float yInput;
     protected float stateTimer;
+    protected bool triggerCalled;
 
     public PlayerState(PlayerStateMachine stateMachine, Player player, string animBoolName)
     {
@@ -26,6 +27,7 @@ public class PlayerState
     public virtual void Enter()
     {
         this.rb = player.rb;
+        triggerCalled = false;
         player.anim.SetBool(animBoolName , true);
 
     }
@@ -37,15 +39,17 @@ public class PlayerState
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
 
-        Debug.Log("Horizontal :" + xInput);
-        Debug.Log("Vertical :" + yInput);
-
         player.anim.SetFloat("yVelocity" , rb.velocity.y);
     }
 
     public virtual void Exit()
     {
         player.anim.SetBool(animBoolName , false);
+        
+    }
 
+    public virtual void AnimationFinishTrigger()
+    {
+        triggerCalled = true;
     }
 }

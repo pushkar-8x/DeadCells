@@ -20,6 +20,13 @@ public class PlayerDashState : PlayerState
 
         player.SetVelocity(player.dashSpeed * player.dashDirection , 0f);
 
+        if (player.IsTouchingWall())
+        {
+            stateMachine.SwitchState(player.wallSlideState);
+            return;
+        }
+            
+
         if(stateTimer < 0)
         {
             stateMachine.SwitchState(player.idleState);
