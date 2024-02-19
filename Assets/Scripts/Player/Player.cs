@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
     #region Public variables
 
@@ -14,39 +14,24 @@ public class Player : MonoBehaviour
     public float dashDuration = 0.2f;
     public float dashSpeed = 25f;
     public float dashCoolDown = 1f;
-
     private float dashUsageTimer;
     public float dashDirection { get; private set; }
 
     [Header("Attack")]
     public Vector2[] attackMovement;
 
-    [Header("Collisions")]
-    [SerializeField] Transform groundCheckPoint;
-    [SerializeField] Transform wallCheckPoint;
-    [SerializeField] float groundCheckDistance;
-    [SerializeField] float wallCheckDistance;
-    [SerializeField] LayerMask groundMask;
 
     #endregion
 
 
-    #region Private variables
-
-    private bool facingRight = true;
-
-    #endregion
-
-
+  
     #region GETTERS
-    public int faceDirection { get; private set; } = 1;
 
-    public Animator anim { get; private set; }
 
     public bool IsBusy { get; private set; }
     public PlayerStateMachine stateMachine { get; private set; }
 
-    public Rigidbody2D rb { get; private set;}
+
 
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
@@ -62,24 +47,18 @@ public class Player : MonoBehaviour
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
 
-    public void ZeroVelocity() => rb.velocity = Vector2.zero;
-
-    public bool IsGrounded() => Physics2D.Raycast(groundCheckPoint.position,
-        Vector2.down, groundCheckDistance, groundMask);
-
-    public bool IsTouchingWall() => Physics2D.Raycast(wallCheckPoint.position, Vector2.right * faceDirection,
-        wallCheckDistance, groundMask);
-
+    
     public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
     #endregion
 
 
     #region Monobehaviour Methods
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         stateMachine = new PlayerStateMachine();
-        rb = GetComponent<Rigidbody2D>();
+
         idleState = new PlayerIdleState(stateMachine, this, "Idle");
         moveState = new PlayerMoveState(stateMachine, this, "Move");
         jumpState = new PlayerJumpState(stateMachine, this, "Jump");
@@ -90,16 +69,15 @@ public class Player : MonoBehaviour
         attackState = new PlayerAttackState(stateMachine, this, "Attack");
     }
 
-    private void Start()
+    protected override void Start()
     {
-        anim = GetComponentInChildren<Animator>();
+        base.Start();
         stateMachine.Initialise(idleState);
-
-        
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         stateMachine.currentState.Update();
         CheckForDash();
     }
@@ -130,36 +108,5 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(_duration);
         IsBusy = false;
     }
-
-    public void SetVelocity(float xVelocity , float yVelocity)
-    {
-        rb.velocity = new Vector2(xVelocity, yVelocity);
-        FlipController(xVelocity);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(groundCheckPoint.position ,
-            new Vector2(groundCheckPoint.position.x, groundCheckPoint.position.y - groundCheckDistance));
-
-        Gizmos.DrawLine(wallCheckPoint.position,
-            new Vector2(wallCheckPoint.position.x + wallCheckDistance, wallCheckPoint.position.y));
-    }
-
-    #region Flip
-    private void Flip()
-    {
-        faceDirection = -1 * faceDirection;
-        facingRight = !facingRight;
-        transform.Rotate(0, 180, 0);
-    }
    
-    private void FlipController(float _xVel)
-    {
-        if (_xVel > 0 && !facingRight)
-            Flip();
-        else if (_xVel < 0 && facingRight)
-            Flip();
-    }
-    #endregion
 }

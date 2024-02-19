@@ -10,7 +10,7 @@ public class PlayerState
 
     protected Rigidbody2D rb;
 
-    private string animBoolName;
+    private string animBoolName ;
 
     protected float xInput;
     protected float yInput;
