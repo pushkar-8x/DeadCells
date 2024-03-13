@@ -18,7 +18,7 @@ public class Parallax : MonoBehaviour
         xPosition = transform.position.x;
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         float distanceMoved = cam.transform.position.x * (1 - parallaxSpeed);
         float distanceToMove = cam.transform.position.x * parallaxSpeed;
