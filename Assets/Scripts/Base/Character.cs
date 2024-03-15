@@ -61,7 +61,7 @@ public class Character : MonoBehaviour
     }
 
     #region Flip
-    private void Flip()
+    public void Flip()
     {
         faceDirection = -1 * faceDirection;
         facingRight = !facingRight;

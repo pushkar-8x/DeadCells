@@ -13,6 +13,7 @@ public class Skeleton_IdleState : EnemyState
     public override void Enter()
     {
         base.Enter();
+        stateTimer = 2f;
     }
 
     public override void Exit()
@@ -23,5 +24,10 @@ public class Skeleton_IdleState : EnemyState
     public override void Update()
     {
         base.Update();
+
+        if(stateTimer < 0)
+        {
+            stateMachine.SwitchState(_skeleton._moveState);
+        }
     }
 }

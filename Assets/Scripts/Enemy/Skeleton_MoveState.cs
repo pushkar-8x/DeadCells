@@ -23,5 +23,12 @@ public class Skeleton_MoveState : EnemyState
     public override void Update()
     {
         base.Update();
+
+        _skeleton.SetVelocity(2 * _skeleton.faceDirection, _skeleton.rb.velocity.y);
+        if (_skeleton.IsTouchingWall()||!_skeleton.IsGrounded()) 
+        {
+            _skeleton.Flip();
+            stateMachine.SwitchState(_skeleton._idleState);
+        }
     }
 }
