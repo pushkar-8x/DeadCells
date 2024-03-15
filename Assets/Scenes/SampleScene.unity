@@ -1921,9 +1921,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1821488522}
-  - component: {fileID: 1821488521}
   - component: {fileID: 1821488524}
   - component: {fileID: 1821488523}
+  - component: {fileID: 1821488525}
   m_Layer: 0
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -1931,25 +1931,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1821488521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1821488520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffc93e2eab43e844b8a1810e41318ea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundCheckPoint: {fileID: 133001335}
-  wallCheckPoint: {fileID: 1821488522}
-  groundCheckDistance: 0.4
-  wallCheckDistance: 0.8
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!4 &1821488522
 Transform:
   m_ObjectHideFlags: 0
@@ -2039,6 +2020,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &1821488525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821488520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a4eeb1f846fe024eaba76402ec7f6c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundCheckPoint: {fileID: 133001335}
+  wallCheckPoint: {fileID: 1821488522}
+  groundCheckDistance: 0.4
+  wallCheckDistance: 0.8
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1978833075
 GameObject:
   m_ObjectHideFlags: 0
