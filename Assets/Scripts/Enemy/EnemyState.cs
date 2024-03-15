@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyState : MonoBehaviour
+public class EnemyState
 {
     protected EnemyStateMachine stateMachine;
 
@@ -22,7 +22,7 @@ public class EnemyState : MonoBehaviour
     public virtual void Enter()
     {
         triggerCalled = false;
-
+        enemy.anim.SetBool(animBoolName, true);
     }
 
     public virtual void Update()
@@ -32,7 +32,7 @@ public class EnemyState : MonoBehaviour
 
     public virtual void Exit()
     {
-
+        enemy.anim.SetBool(animBoolName, false);
     }
 
     public virtual void AnimationFinishTrigger()
