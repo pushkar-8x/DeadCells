@@ -7,12 +7,12 @@ public class EnemyState
     protected EnemyStateMachine stateMachine;
 
     protected Enemy enemy;
-
+    protected Rigidbody2D rb;
     private string animBoolName;
     protected float stateTimer;
     protected bool triggerCalled;
 
-    public EnemyState(EnemyStateMachine stateMachine, Enemy enemy, string animBoolName)
+    public EnemyState(EnemyStateMachine stateMachine, Enemy enemy, string animBoolName )
     {
         this.stateMachine = stateMachine;
         this.enemy = enemy;
@@ -23,6 +23,7 @@ public class EnemyState
     {
         triggerCalled = false;
         enemy.anim.SetBool(animBoolName, true);
+        this.rb = enemy.rb;
     }
 
     public virtual void Update()

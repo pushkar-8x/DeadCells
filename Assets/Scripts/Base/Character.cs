@@ -8,11 +8,11 @@ public class Character : MonoBehaviour
     public Animator anim { get; private set; }
 
     [Header("Collisions")]
-    [SerializeField] Transform groundCheckPoint;
-    [SerializeField] Transform wallCheckPoint;
-    [SerializeField] float groundCheckDistance;
-    [SerializeField] float wallCheckDistance;
-    [SerializeField] LayerMask groundMask;
+    [SerializeField]protected Transform groundCheckPoint;
+    [SerializeField]protected Transform wallCheckPoint;
+    [SerializeField]protected float groundCheckDistance;
+    [SerializeField]protected float wallCheckDistance;
+    [SerializeField]protected LayerMask groundMask;
 
     public int faceDirection { get; private set; } = 1;
     private bool facingRight = true;

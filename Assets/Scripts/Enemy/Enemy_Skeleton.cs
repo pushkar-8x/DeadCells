@@ -7,11 +7,14 @@ public class Enemy_Skeleton : Enemy
     public Skeleton_IdleState _idleState { get; private set; }
     public Skeleton_MoveState _moveState { get; private set; }
 
+    public Skeleton_BattleState _battleState { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();
         _idleState = new Skeleton_IdleState(stateMachine, this, "Idle", this);
         _moveState = new Skeleton_MoveState(stateMachine, this, "Move", this);
+        _battleState = new Skeleton_BattleState(stateMachine, this, "Move", this);
     }
 
     protected override void Start()

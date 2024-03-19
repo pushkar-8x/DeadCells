@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skeleton_IdleState : EnemyState
+public class Skeleton_IdleState : Skeleton_GroundedState
 {
-    private Enemy_Skeleton _skeleton;
-    public Skeleton_IdleState(EnemyStateMachine stateMachine, Enemy enemy, string animBoolName, Enemy_Skeleton skeleton) : base(stateMachine, enemy, animBoolName)
+
+    public Skeleton_IdleState(EnemyStateMachine stateMachine, Enemy enemy, string animBoolName, Enemy_Skeleton _skeleton) : base(stateMachine, enemy, animBoolName , _skeleton)
     {
-        _skeleton = skeleton;
+
     }
 
     public override void Enter()
     {
         base.Enter();
-        stateTimer = 2f;
+        stateTimer = _skeleton.idleTime;
     }
 
     public override void Exit()
