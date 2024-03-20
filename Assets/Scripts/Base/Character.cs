@@ -36,7 +36,7 @@ public class Character : MonoBehaviour
 
     }
 
-    public void ZeroVelocity() => rb.velocity = Vector2.zero;
+    public void SetZeroVelocity() => rb.velocity = Vector2.zero;
 
     public bool IsGrounded() => Physics2D.Raycast(groundCheckPoint.position,
         Vector2.down, groundCheckDistance, groundMask);

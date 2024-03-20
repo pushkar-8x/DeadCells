@@ -38,7 +38,7 @@ public class PlayerAttackState : PlayerState
         base.Update();
 
         if (stateTimer < 0)
-            player.ZeroVelocity();
+            player.SetZeroVelocity();
 
         if (triggerCalled)
             stateMachine.SwitchState(player.idleState);

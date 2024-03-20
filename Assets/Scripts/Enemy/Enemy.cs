@@ -10,10 +10,16 @@ public class Enemy : Character
 
     [Header("Attack")]
     public float attackDistance = 2f;
+    public float attackCooldown = 2f;
+    public float battleTime = 5f;
+    public float maxAgroRange = 10f;
+    [HideInInspector] public float lastTimeAttacked;
 
     [SerializeField] protected LayerMask whatIsPlayer;
 
     public EnemyStateMachine stateMachine { get; private set; }
+
+    public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
     public virtual RaycastHit2D IsPlayerDetected() => 
         Physics2D.Raycast(wallCheckPoint.position, faceDirection * Vector2.right, 50f, whatIsPlayer);

@@ -27,17 +27,27 @@ public class Skeleton_BattleState : Skeleton_GroundedState
     {
         base.Update();
 
-        /*if (!_skeleton.IsPlayerDetected())
-            stateMachine.SwitchState(_skeleton._idleState);*/
-
         if(_skeleton.IsPlayerDetected())
         {
+            stateTimer = _skeleton.battleTime;
             if(_skeleton.IsPlayerDetected().distance < _skeleton.attackDistance)
             {
-                Debug.Log("I ATTACK !");
-                _skeleton.ZeroVelocity();
-                return;
+                if(CanAttack())
+                {
+                    stateMachine.SwitchState(_skeleton._attackState);
+                    return;
+                }
+                              
             }
+        }
+        else
+        {
+            if(stateTimer<0||
+                Vector2.Distance(_playerTransform.position,_skeleton.transform.position)>_skeleton.maxAgroRange)
+            {
+                stateMachine.SwitchState(_skeleton._idleState);
+            }
+
         }
         
         if (_playerTransform.position.x > _skeleton.transform.position.x)
@@ -50,5 +60,14 @@ public class Skeleton_BattleState : Skeleton_GroundedState
         }
         _skeleton.SetVelocity(_skeleton.moveSpeed * moveDir, rb.velocity.y);
 
+    }
+
+    public bool CanAttack()
+    {
+        if(Time.time > _skeleton.lastTimeAttacked + _skeleton.attackCooldown)
+        {
+            return true;
+        }
+        else { return false; }
     }
 }
