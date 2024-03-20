@@ -17,17 +17,22 @@ public class Character : MonoBehaviour
     [Header("Attack")]
     public Transform attackPoint;
     public float attackRadius;
+    public Vector2 knockBackDirection = new Vector2(7,12);
+    public float knockBackDuration = 0.5f;
+    
 
     public int faceDirection { get; private set; } = 1;
     private bool facingRight = true;
+    private bool isKnocked;
 
-
+    private CharacterFX _characterFx;
 
     protected virtual void Awake()
     {
         
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        _characterFx = GetComponent<CharacterFX>();
     }
 
     protected virtual void Start()
@@ -40,7 +45,11 @@ public class Character : MonoBehaviour
 
     }
 
-    public void SetZeroVelocity() => rb.velocity = Vector2.zero;
+    public void SetZeroVelocity()
+    {
+        if (isKnocked) return;
+        rb.velocity = Vector2.zero;
+    }
 
     public bool IsGrounded() => Physics2D.Raycast(groundCheckPoint.position,
         Vector2.down, groundCheckDistance, groundMask);
@@ -51,13 +60,27 @@ public class Character : MonoBehaviour
 
     public void SetVelocity(float xVelocity, float yVelocity)
     {
+        if (isKnocked) return;
         rb.velocity = new Vector2(xVelocity, yVelocity);
         FlipController(xVelocity);
     }
 
     public virtual void Damage()
     {
+        _characterFx.PlayFlash();
+        StartCoroutine("KnockBackRoutine");
         Debug.Log("Damaged:" + gameObject.name);
+
+    }
+
+    private IEnumerator KnockBackRoutine()
+    {
+        isKnocked = true;
+
+        rb.velocity = new Vector2(knockBackDirection.x * -faceDirection, knockBackDirection.y);
+        yield return new WaitForSeconds(knockBackDuration);
+
+        isKnocked = false;
     }
 
     public virtual void OnDrawGizmos()

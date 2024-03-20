@@ -1387,6 +1387,7 @@ GameObject:
   - component: {fileID: 946647285}
   - component: {fileID: 946647288}
   - component: {fileID: 946647287}
+  - component: {fileID: 946647289}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -1415,6 +1416,8 @@ MonoBehaviour:
     m_Bits: 64
   attackPoint: {fileID: 990284825}
   attackRadius: 1
+  knockBackDirection: {x: 0, y: 0}
+  knockBackDuration: 0.5
   MoveSpeed: 8
   JumpForce: 12
   dashDuration: 0.2
@@ -1505,6 +1508,20 @@ CapsuleCollider2D:
   m_Offset: {x: -0.07, y: -0.24992907}
   m_Size: {x: 1.08, y: 2.1246808}
   m_Direction: 0
+--- !u!114 &946647289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946647284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498be71609cfcaa4f994b57b89fbab84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMat: {fileID: 2100000, guid: b56303d9035eaeb4288d5f45d0d05213, type: 2}
+  flashDuration: 0.2
 --- !u!1 &967821020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,6 +1989,7 @@ GameObject:
   - component: {fileID: 1821488524}
   - component: {fileID: 1821488523}
   - component: {fileID: 1821488525}
+  - component: {fileID: 1821488526}
   m_Layer: 8
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -2058,7 +2076,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 4
+  m_GravityScale: 12
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -2091,6 +2109,8 @@ MonoBehaviour:
     m_Bits: 64
   attackPoint: {fileID: 1884018156}
   attackRadius: 1
+  knockBackDirection: {x: 7, y: 12}
+  knockBackDuration: 0.5
   moveSpeed: 1.5
   idleTime: 2
   attackDistance: 2
@@ -2101,6 +2121,20 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &1821488526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821488520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498be71609cfcaa4f994b57b89fbab84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashMat: {fileID: 2100000, guid: b56303d9035eaeb4288d5f45d0d05213, type: 2}
+  flashDuration: 0.2
 --- !u!1 &1855333079
 GameObject:
   m_ObjectHideFlags: 0

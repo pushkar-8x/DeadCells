@@ -20,6 +20,8 @@ public class PlayerAttackState : PlayerState
         if (comboCounter > 2 || Time.time >= lastAttackedTime + comboWindow)
             comboCounter = 0;
 
+        xInput = 0;
+
         Debug.Log(comboCounter);
         player.anim.SetInteger("ComboCounter", comboCounter);
 
