@@ -14,6 +14,10 @@ public class Character : MonoBehaviour
     [SerializeField]protected float wallCheckDistance;
     [SerializeField]protected LayerMask groundMask;
 
+    [Header("Attack")]
+    public Transform attackPoint;
+    public float attackRadius;
+
     public int faceDirection { get; private set; } = 1;
     private bool facingRight = true;
 
@@ -51,13 +55,20 @@ public class Character : MonoBehaviour
         FlipController(xVelocity);
     }
 
-    private void OnDrawGizmos()
+    public virtual void Damage()
+    {
+        Debug.Log("Damaged:" + gameObject.name);
+    }
+
+    public virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(groundCheckPoint.position,
             new Vector2(groundCheckPoint.position.x, groundCheckPoint.position.y - groundCheckDistance));
 
         Gizmos.DrawLine(wallCheckPoint.position,
             new Vector2(wallCheckPoint.position.x + wallCheckDistance, wallCheckPoint.position.y));
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRadius);
     }
 
     #region Flip

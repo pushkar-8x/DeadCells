@@ -38,8 +38,11 @@ public class Enemy : Character
         //Debug.Log("Player detected " + IsPlayerDetected());
     }
 
-    private void OnDrawGizmos()
+    
+
+    public override void OnDrawGizmos()
     {
+        base.OnDrawGizmos();
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance, transform.position.y));
     }
