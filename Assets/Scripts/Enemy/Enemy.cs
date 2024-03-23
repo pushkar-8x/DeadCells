@@ -14,8 +14,13 @@ public class Enemy : Character
     public float battleTime = 5f;
     public float maxAgroRange = 10f;
     [HideInInspector] public float lastTimeAttacked;
-
     [SerializeField] protected LayerMask whatIsPlayer;
+
+    [Header("Stun")]
+    public float stunDuration;
+    public Vector2 stunDirection;
+
+    public CharacterFX characterFX => GetComponent<CharacterFX>();
 
     public EnemyStateMachine stateMachine { get; private set; }
 

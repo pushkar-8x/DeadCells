@@ -12,6 +12,8 @@ public class EnemyState
     protected float stateTimer;
     protected bool triggerCalled;
 
+    
+
     public EnemyState(EnemyStateMachine stateMachine, Enemy enemy, string animBoolName )
     {
         this.stateMachine = stateMachine;

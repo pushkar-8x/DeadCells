@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterFX : MonoBehaviour
 {
-    private SpriteRenderer charSpriteRenderer;
+    private SpriteRenderer sr;
     [SerializeField] Material flashMat;
     private Material originalMat;
 
@@ -12,8 +12,8 @@ public class CharacterFX : MonoBehaviour
 
     private void Awake()
     {
-        charSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        originalMat = charSpriteRenderer.material;
+        sr = GetComponentInChildren<SpriteRenderer>();
+        originalMat = sr.material;
     }
 
     public void PlayFlash()
@@ -23,9 +23,27 @@ public class CharacterFX : MonoBehaviour
 
     private IEnumerator PlayFlashRoutine()
     {
-        charSpriteRenderer.sharedMaterial = flashMat;
+        sr.sharedMaterial = flashMat;
         yield return new WaitForSeconds(flashDuration);
-        charSpriteRenderer.sharedMaterial = originalMat;
+        sr.sharedMaterial = originalMat;
+    }
+
+    private void BlinkSprite()
+    {
+        if(sr.color != Color.white)
+        {
+            sr.color = Color.white;
+        }
+        else
+        {
+            sr.color = Color.red;
+        }
+    }
+
+    private void CancelBlink()
+    {
+        CancelInvoke("BlinkSprite");
+        sr.color = Color.white;
     }
 
 }
