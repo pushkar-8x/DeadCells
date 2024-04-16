@@ -19,6 +19,7 @@ public class Player : Character
 
     [Header("Attack")]
     public Vector2[] attackMovement;
+    public float counterAttackDuration = 0.2f;
 
 
     #endregion
@@ -44,6 +45,8 @@ public class Player : Character
 
     public PlayerAttackState attackState { get; private set; }
 
+    public PlayerCounterAttackState counterAttackState { get; private set; }
+
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
 
@@ -67,6 +70,7 @@ public class Player : Character
         wallSlideState = new PlayerWallSlideState(stateMachine, this, "WallSlide");
         wallJumpState = new PlayerWallJumpState(stateMachine, this, "Jump");
         attackState = new PlayerAttackState(stateMachine, this, "Attack");
+        counterAttackState = new PlayerCounterAttackState(stateMachine, this, "CounterAttack");
     }
 
     protected override void Start()

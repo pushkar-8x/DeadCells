@@ -22,4 +22,7 @@ public class Skeleton_AnimationTrigger : MonoBehaviour
             player?.Damage();
         }
     }
+
+    private void OpenCounterAttackWindow() => _skeleton.OpenCounterWindow();
+    private void CloseCounterAttackWindow() => _skeleton.CloseCounterWindow();
 }

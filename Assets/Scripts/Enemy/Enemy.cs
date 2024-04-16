@@ -19,6 +19,9 @@ public class Enemy : Character
     [Header("Stun")]
     public float stunDuration;
     public Vector2 stunDirection;
+    public SpriteRenderer counterImage;
+
+    private bool canBeStunned;
 
     public CharacterFX characterFX => GetComponent<CharacterFX>();
 
@@ -43,7 +46,28 @@ public class Enemy : Character
         //Debug.Log("Player detected " + IsPlayerDetected());
     }
 
-    
+    public virtual void OpenCounterWindow()
+    {
+        canBeStunned = true;
+        counterImage.gameObject.SetActive(true);
+    }
+
+    public virtual void CloseCounterWindow()
+    {
+        canBeStunned = false;
+        counterImage.gameObject.SetActive(false);
+    }
+
+    public virtual bool CanBeStunned()
+    {
+        if (canBeStunned)
+        {
+            CloseCounterWindow();
+            return true;
+
+        }
+        return false;
+    }
 
     public override void OnDrawGizmos()
     {
