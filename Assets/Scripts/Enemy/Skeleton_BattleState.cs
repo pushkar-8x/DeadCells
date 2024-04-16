@@ -14,7 +14,7 @@ public class Skeleton_BattleState : Skeleton_GroundedState
     public override void Enter()
     {
         base.Enter();
-        _playerTransform = GameObject.Find("Player").transform;
+        _playerTransform = PlayerManager.instance.player.transform;
         Debug.Log("IM IN BATTLE STATE");
     }
 

@@ -13,8 +13,6 @@ public class Player : Character
     [Header("Dash ")]
     public float dashDuration = 0.2f;
     public float dashSpeed = 25f;
-    public float dashCoolDown = 1f;
-    private float dashUsageTimer;
     public float dashDirection { get; private set; }
 
     [Header("Attack")]
@@ -92,11 +90,8 @@ public class Player : Character
     {
         if (IsTouchingWall()) return;
 
-        dashUsageTimer -= Time.deltaTime;
-
-        if(Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0f)
+        if(Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dashSkill.CanUseSkill())
         {
-            dashUsageTimer = dashCoolDown;
             dashDirection = Input.GetAxisRaw("Horizontal");
 
             if (dashDirection == 0)
