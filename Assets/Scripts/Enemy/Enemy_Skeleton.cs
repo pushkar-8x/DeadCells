@@ -42,9 +42,9 @@ public class Enemy_Skeleton : Enemy
        if(base.CanBeStunned())
         {
             stateMachine.SwitchState(_stunState);
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

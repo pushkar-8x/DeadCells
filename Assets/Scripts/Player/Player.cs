@@ -30,7 +30,7 @@ public class Player : Character
     public bool IsBusy { get; private set; }
     public PlayerStateMachine stateMachine { get; private set; }
 
-
+    public SkillManager skillManager { get; private set; }
 
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
@@ -69,6 +69,7 @@ public class Player : Character
         wallJumpState = new PlayerWallJumpState(stateMachine, this, "Jump");
         attackState = new PlayerAttackState(stateMachine, this, "Attack");
         counterAttackState = new PlayerCounterAttackState(stateMachine, this, "CounterAttack");
+        skillManager = SkillManager.instance;
     }
 
     protected override void Start()

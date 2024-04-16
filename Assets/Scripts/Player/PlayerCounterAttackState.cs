@@ -30,7 +30,6 @@ public class PlayerCounterAttackState : PlayerState
 
         foreach (Collider2D col in cols)
         {
-
             Enemy enemy = col.GetComponent<Enemy>();
 
             if (enemy != null && enemy.CanBeStunned())

@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Clone_Skill : MonoBehaviour
+public class Clone_Skill : Skill
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Clone Info")]
+    [SerializeField] GameObject clonePrefab;
+    [SerializeField] private float cloneDuration = 1.5f;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] bool canAttack = true;
+
+    public void CreateClone(Transform transform)
     {
-        
+        GameObject clone  = Instantiate(clonePrefab);
+        clone.GetComponent<CloneSkill_Controller>().SetupClone(transform , cloneDuration , canAttack);
+
     }
 }
