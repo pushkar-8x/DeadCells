@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    [SerializeField] private float coolDownTime = 1f;
-    private float coolDownTimer;
+    [SerializeField] protected float coolDownTime = 1f;
+    protected float coolDownTimer;
 
-
-
-    private void Start()
+    protected virtual void Start()
     {
         coolDownTimer = coolDownTime;
 
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(coolDownTimer > -1f) 
         coolDownTimer -= Time.deltaTime;
