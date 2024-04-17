@@ -18,6 +18,7 @@ public class Player : Character
     [Header("Attack")]
     public Vector2[] attackMovement;
     public float counterAttackDuration = 0.2f;
+    public float swordCatchImpact = 7f;
 
 
     #endregion
@@ -43,8 +44,12 @@ public class Player : Character
 
     public PlayerAttackState attackState { get; private set; }
 
+    public GameObject playerSword { get; private set; }
+
     public PlayerCounterAttackState counterAttackState { get; private set; }
 
+    public PlayerAimSwordState aimSwordState { get; private set; }
+    public PlayerCatchSwordState catchSwordState { get; private set; }
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
 
@@ -58,6 +63,7 @@ public class Player : Character
     protected override void Awake()
     {
         base.Awake();
+        skillManager = SkillManager.instance;
         stateMachine = new PlayerStateMachine();
 
         idleState = new PlayerIdleState(stateMachine, this, "Idle");
@@ -69,7 +75,9 @@ public class Player : Character
         wallJumpState = new PlayerWallJumpState(stateMachine, this, "Jump");
         attackState = new PlayerAttackState(stateMachine, this, "Attack");
         counterAttackState = new PlayerCounterAttackState(stateMachine, this, "CounterAttack");
-        skillManager = SkillManager.instance;
+        aimSwordState = new PlayerAimSwordState(stateMachine,this, "AimSword");
+        catchSwordState = new PlayerCatchSwordState(stateMachine, this, "CatchSword");
+        
     }
 
     protected override void Start()
@@ -86,6 +94,17 @@ public class Player : Character
     }
 
     #endregion
+
+    public void AssignSword(GameObject sword)
+    {
+        playerSword = sword;
+    }
+
+    public void CatchSword()
+    {
+        stateMachine.SwitchState(catchSwordState);
+        Destroy(playerSword);
+    }
 
     private void CheckForDash()
     {

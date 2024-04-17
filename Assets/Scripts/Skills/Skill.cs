@@ -6,9 +6,16 @@ public class Skill : MonoBehaviour
 {
     [SerializeField] protected float coolDownTime = 1f;
     protected float coolDownTimer;
+    protected Player player;
+
+    protected virtual void Awake()
+    {
+        
+    }
 
     protected virtual void Start()
     {
+        player = PlayerManager.instance.player;
         coolDownTimer = coolDownTime;
 
     }

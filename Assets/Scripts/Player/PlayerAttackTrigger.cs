@@ -22,4 +22,9 @@ public class PlayerAttackTrigger : MonoBehaviour
             enemy?.Damage();           
         }
     }
+
+    public void ThrowSword()
+    {
+        SkillManager.instance.swordSkill.CreateSword();
+    }
 }
