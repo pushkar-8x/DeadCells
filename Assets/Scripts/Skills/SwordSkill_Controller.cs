@@ -12,6 +12,17 @@ public class SwordSkill_Controller : MonoBehaviour
     private bool isReturning;
     [SerializeField] float returnSpeed = 12f;
 
+    [Header("Bounce Info")]
+    [SerializeField] private bool canBounce = true;
+    [SerializeField] private int bounceCount = 4;
+    [SerializeField] private float bounceSpeed = 20f;
+
+    private List<Transform> enemyTargets  = new List<Transform>();
+
+    private int targetIndex;
+
+
+
     private void Awake()
     {
         anim= GetComponentInChildren<Animator>();
@@ -39,6 +50,26 @@ public class SwordSkill_Controller : MonoBehaviour
                 player.CatchSword();
         }
 
+        if( canBounce && enemyTargets.Count > 0 )
+        {
+            transform.position =  Vector2.MoveTowards(transform.position , enemyTargets[targetIndex].position , bounceSpeed * Time.deltaTime);
+            float dist = Vector2.Distance(transform.position, enemyTargets[targetIndex].position);
+            if(dist < 0.1f)
+            {
+                targetIndex++;
+                bounceCount--;
+
+                if(bounceCount <= 0 )
+                {
+                    canBounce = false;
+                    isReturning = true;
+                }
+                
+                if(targetIndex >= enemyTargets.Count)
+                    targetIndex = 0;
+            }
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,11 +77,40 @@ public class SwordSkill_Controller : MonoBehaviour
         if (isReturning)
             return;
 
+        Enemy enemy = collision.GetComponent<Enemy>();
+
+        if(enemy != null && canBounce && enemyTargets.Count <= 0)
+        {
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, 10f);
+
+            foreach (Collider2D col in enemies)
+            {
+                Enemy targetEnemy = col.GetComponent<Enemy>();
+                if (targetEnemy != null)
+                {
+                    enemyTargets.Add(targetEnemy.transform);
+                }                   
+
+            }
+        }
+
+        SetupHitBehaviour(collision);
+    }
+
+    private void SetupHitBehaviour(Collider2D collision)
+    {
         canRotate = false;
         rb.isKinematic = true;
         circleCollider.enabled = false;
-        anim.SetBool("Rotate", false);
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        
+
+        if(canBounce && enemyTargets.Count>0) 
+        {
+            return;
+        }
+
+        anim.SetBool("Rotate", false);
         transform.parent = collision.transform;
     }
 
