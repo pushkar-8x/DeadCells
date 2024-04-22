@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCatchSwordState : PlayerState
@@ -39,7 +37,7 @@ public class PlayerCatchSwordState : PlayerState
     {
         base.Update();
 
-        if(triggerCalled)
+        if (triggerCalled)
         {
             stateMachine.SwitchState(player.idleState);
         }

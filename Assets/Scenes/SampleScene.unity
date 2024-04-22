@@ -1088,7 +1088,7 @@ Transform:
   m_GameObject: {fileID: 552376352}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.1, y: -14.14, z: 0}
+  m_LocalPosition: {x: -24.29, y: -14.14, z: 0}
   m_LocalScale: {x: 30, y: 16.908901, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2520,7 +2520,7 @@ Transform:
   m_GameObject: {fileID: 1821488520}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.03, y: -4.55, z: 0}
+  m_LocalPosition: {x: -19.36, y: -4.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3012,12 +3012,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolDownTime: 1
   swordPrefab: {fileID: 8157397659824403925, guid: 3a4edfa958d89874da220db235bb7a8c, type: 3}
-  launchForce: {x: 15, y: 20}
-  swordGravity: 4
+  launchForce: {x: 35, y: 20}
+  swordGravity: 0.5
+  canBounce: 1
+  bounceCount: 4
+  bounceGravity: 5
+  canPierce: 1
+  pierceCount: 2
+  pierceGravity: 5
+  canSpin: 1
+  spinDuration: 3
+  spinGravity: 1
+  maxSpinDistance: 10
   dotsPrefab: {fileID: 6055533108967944123, guid: 88fca29bee0b6b24a8f6e5c8da0ee33e, type: 3}
   dotsCount: 20
   spaceBwDots: 0.07
   dotsParent: {fileID: 1342729675}
+  _swordType: 3
 --- !u!1 &2038762156
 GameObject:
   m_ObjectHideFlags: 0
