@@ -22,6 +22,7 @@ public class Enemy : Character
     public SpriteRenderer counterImage;
 
     private bool canBeStunned;
+    private float defaultMoveSpeed;
 
     public CharacterFX characterFX => GetComponent<CharacterFX>();
 
@@ -36,6 +37,7 @@ public class Enemy : Character
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
+        defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Update()
@@ -56,6 +58,27 @@ public class Enemy : Character
     {
         canBeStunned = false;
         counterImage.gameObject.SetActive(false);
+    }
+
+    private void FreezeTime(bool shouldFreeze)
+    {
+        if(shouldFreeze)
+        {
+            anim.speed = 0f;
+            moveSpeed = 0;
+        }
+        else
+        {
+            anim.speed = 1f;
+            moveSpeed = defaultMoveSpeed ;
+        }
+    }
+
+    private IEnumerator FreezeTimeForSeconds(float _seconds)
+    {
+        FreezeTime(true);
+        yield return new WaitForSeconds(_seconds);
+        FreezeTime(false);
     }
 
     public virtual bool CanBeStunned()

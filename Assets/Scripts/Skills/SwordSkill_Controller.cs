@@ -10,17 +10,25 @@ public class SwordSkill_Controller : MonoBehaviour
     private Player player;
     private bool canRotate = true;
     private bool isReturning;
-    [SerializeField] float returnSpeed = 12f;
+    private float returnSpeed;
 
     [Header("Bounce Info")]
     private bool canBounce ;
-    private int bounceCount = 4;
-    [SerializeField] private float bounceSpeed = 20f;
+    private int bounceCount ;
+    private float bounceSpeed ;
 
     [Header("Pierce Info")]
     private int pierceCount;
 
     [Header("Spin Info")]
+    [SerializeField] private float spinHitSpeed = 1.5f;
+
+    [Header("Destroy Info")]
+    [SerializeField] private float destroyTime = 5f;
+    [SerializeField] private float blinkDuration = 2.0f;
+    [SerializeField] private float blinkInterval = 0.1f;
+
+
     private float spinDuration;
     private float spinTimer;
     private bool isSpinning;
@@ -29,25 +37,29 @@ public class SwordSkill_Controller : MonoBehaviour
     private float hitTimer;
     private float hitCoolDown;
     private float spinHitDirection;
-    [SerializeField] private float spinHitSpeed = 1.5f;
+    private float freezeDuration; 
     private List<Transform> enemyTargets  = new List<Transform>();
-
     private int targetIndex;
-
-
+    private SpriteRenderer swordSpriteRenderer;
 
     private void Awake()
     {
         anim= GetComponentInChildren<Animator>();
+        swordSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
         circleCollider= GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        Invoke(nameof(DestroyMe), destroyTime);
     }
 
-    public void SetupSword(Vector2 _dir , float gravityScale , Player player)
+    
+
+    public void SetupSword(Vector2 _dir , float gravityScale , Player player , float freezeDuration , float returnSpeed)
     {
         this.player = player;
         rb.velocity = _dir;
         rb.gravityScale = gravityScale;
+        this.freezeDuration = freezeDuration;
+        this.returnSpeed = returnSpeed;
 
         if(pierceCount <= 0)
         anim.SetBool("Rotate", true);
@@ -55,10 +67,11 @@ public class SwordSkill_Controller : MonoBehaviour
         spinHitDirection = Mathf.Clamp(rb.velocity.x, -1f, 1f);
     }
 
-    public void SetupBounce(bool canBounce, int bounceCount)
+    public void SetupBounce(bool canBounce, int bounceCount , float bounceSpeed)
     {
         this.canBounce = canBounce;
         this.bounceCount = bounceCount;
+        this.bounceSpeed = bounceSpeed;
     }
 
     public void SetupPierce(int pierceCount)
@@ -122,10 +135,7 @@ public class SwordSkill_Controller : MonoBehaviour
                     foreach (Collider2D col in enemies)
                     {
                         Enemy targetEnemy = col.GetComponent<Enemy>();
-                        if (targetEnemy != null)
-                        {
-                            targetEnemy.Damage();
-                        }
+                        ApplyDamage(targetEnemy);
                     }
                 }
             }
@@ -147,7 +157,8 @@ public class SwordSkill_Controller : MonoBehaviour
             float dist = Vector2.Distance(transform.position, enemyTargets[targetIndex].position);
             if (dist < 0.1f)
             {
-                enemyTargets[targetIndex].GetComponent<Enemy>()?.Damage();
+                Enemy enemy = enemyTargets[targetIndex].GetComponent<Enemy>();
+                ApplyDamage(enemy);
                 targetIndex++;
                 bounceCount--;
                 if (bounceCount <= 0)
@@ -167,9 +178,18 @@ public class SwordSkill_Controller : MonoBehaviour
             return;
 
         Enemy enemy = collision.GetComponent<Enemy>();
-        enemy?.Damage();
+        ApplyDamage(enemy);
         SetupEnemyTargets(enemy);
         SetupHitBehaviour(collision);
+    }
+
+    private void ApplyDamage(Enemy enemy)
+    {
+        if (enemy != null)
+        {
+            enemy?.Damage();
+            enemy.StartCoroutine("FreezeTimeForSeconds", freezeDuration);
+        }
     }
 
     private void SetupEnemyTargets(Enemy enemy)
@@ -225,5 +245,33 @@ public class SwordSkill_Controller : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         isReturning = true;
         transform.parent = null;
+    }
+
+    private void DestroyMe()
+    {
+        StartCoroutine(BlinkAndDestroyCoroutine(swordSpriteRenderer));
+    }
+
+    private IEnumerator BlinkAndDestroyCoroutine(SpriteRenderer spriteRenderer)
+    {
+        // Blink for a certain duration
+        float timer = 0f;
+        Color originalColor = spriteRenderer.color;
+        while (timer < blinkDuration)
+        {
+            Color newColor = originalColor;
+            newColor.a = Mathf.PingPong(Time.time * 5f, 1.0f); // Blinking effect
+            spriteRenderer.color = newColor;
+            yield return new WaitForSeconds(blinkInterval);
+            timer += blinkInterval;
+        }
+
+        // Reset the alpha to 1.0f before destroying
+        Color resetColor = originalColor;
+        resetColor.a = 1.0f;
+        spriteRenderer.color = resetColor;
+
+        // Destroy the GameObject
+        Destroy(gameObject);
     }
 }
