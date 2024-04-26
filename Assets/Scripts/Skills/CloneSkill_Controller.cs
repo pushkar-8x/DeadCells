@@ -41,14 +41,14 @@ public class CloneSkill_Controller : MonoBehaviour
         }
     }
 
-    public void SetupClone(Transform newTransform , float cloneDuration , bool _canAttack)
+    public void SetupClone(Transform newTransform , float cloneDuration , bool _canAttack , Vector2 offset)
     {
         if(_canAttack)
         {
             animator.SetInteger("AttackCounter", Random.Range(1, 4));
         }
 
-        transform.position = newTransform.position;
+        transform.position = newTransform.position + (Vector3)offset;
         cloneTimer = cloneDuration;
 
         FaceEnemy();

@@ -60,7 +60,7 @@ public class Enemy : Character
         counterImage.gameObject.SetActive(false);
     }
 
-    private void FreezeTime(bool shouldFreeze)
+    public void FreezeTime(bool shouldFreeze)
     {
         if(shouldFreeze)
         {
