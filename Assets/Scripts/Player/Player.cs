@@ -53,7 +53,9 @@ public class Player : Character
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
 
-    
+    public PlayerBlackHoleState blackHoleState { get; private set; }
+
+
     public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
     #endregion
@@ -63,7 +65,7 @@ public class Player : Character
     protected override void Awake()
     {
         base.Awake();
-        skillManager = SkillManager.instance;
+        
         stateMachine = new PlayerStateMachine();
 
         idleState = new PlayerIdleState(stateMachine, this, "Idle");
@@ -77,12 +79,14 @@ public class Player : Character
         counterAttackState = new PlayerCounterAttackState(stateMachine, this, "CounterAttack");
         aimSwordState = new PlayerAimSwordState(stateMachine,this, "AimSword");
         catchSwordState = new PlayerCatchSwordState(stateMachine, this, "CatchSword");
-        
+        blackHoleState = new PlayerBlackHoleState(stateMachine, this, "Jump");
+
     }
 
     protected override void Start()
     {
         base.Start();
+        skillManager = SkillManager.instance;
         stateMachine.Initialise(idleState);
     }
 
@@ -104,6 +108,11 @@ public class Player : Character
     {
         stateMachine.SwitchState(catchSwordState);
         Destroy(playerSword);
+    }
+
+    public void ExitBlackHole()
+    {
+        stateMachine.SwitchState(airState);
     }
 
     private void CheckForDash()

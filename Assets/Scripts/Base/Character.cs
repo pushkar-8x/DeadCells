@@ -24,12 +24,13 @@ public class Character : MonoBehaviour
     public int faceDirection { get; private set; } = 1;
     private bool facingRight = true;
     private bool isKnocked;
+    private SpriteRenderer sr;
 
     private CharacterFX _characterFx;
 
     protected virtual void Awake()
     {
-        
+        sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
         _characterFx = GetComponent<CharacterFX>();
@@ -71,6 +72,11 @@ public class Character : MonoBehaviour
         StartCoroutine("KnockBackRoutine");
         Debug.Log("Damaged:" + gameObject.name);
 
+    }
+
+    public void SetTransparent(bool _transparent)
+    {
+        sr.color = _transparent ? Color.clear : Color.white;
     }
 
     private IEnumerator KnockBackRoutine()

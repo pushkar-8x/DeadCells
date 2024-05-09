@@ -28,7 +28,7 @@ public class Blackhole_HotKey : MonoBehaviour
     {
         if(Input.GetKeyDown(_hotKey))
         {
-            //_blackHole.AddTargetToList(_owningEnemy);
+            _blackHole.AddTargetToList(_owningEnemy);
             _spriteRenderer.color = Color.clear;
             hotKeyText.color = Color.clear;
         }

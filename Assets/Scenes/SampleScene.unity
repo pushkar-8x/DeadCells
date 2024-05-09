@@ -2235,7 +2235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!58 &1806396462
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2351,11 +2351,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hotKeyPrefab: {fileID: 8890078722094030669, guid: 493d1374f99245a41b7b47c6ddecbf14, type: 3}
-  maxBlackholeRadius: 30
-  growSpeed: 2
-  canGrow: 0
   keyCodeList: 7100000077000000650000007200000074000000
   cloneAttackCoolDown: 0.5
+  cloneOffset: 2
 --- !u!1001 &1922516469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2461,6 +2459,7 @@ GameObject:
   - component: {fileID: 1990581821}
   - component: {fileID: 1990581822}
   - component: {fileID: 1990581823}
+  - component: {fileID: 1990581824}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -2558,6 +2557,26 @@ MonoBehaviour:
   spaceBwDots: 0.07
   dotsParent: {fileID: 1342729675}
   _swordType: 0
+--- !u!114 &1990581824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990581818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 330b02302ef6f0f4b93f6a6bcb4f2411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coolDownTime: 1
+  blackHolePrefab: {fileID: 4997352358862853541, guid: 21e41beb76d90af45a8d0d9d9f4ddf8d, type: 3}
+  maxBlackholeRadius: 20
+  growSpeed: 2
+  shrinkSpeed: 5
+  cloneAttackCoolDown: 1
+  cloneOffset: 2
+  amountOfAttacks: 10
 --- !u!1001 &1750351528175381164
 PrefabInstance:
   m_ObjectHideFlags: 0

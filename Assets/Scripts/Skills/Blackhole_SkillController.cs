@@ -4,19 +4,19 @@ using UnityEngine;
 public class Blackhole_SkillController : MonoBehaviour
 {
     [SerializeField] Blackhole_HotKey hotKeyPrefab;
-    [SerializeField] private float maxBlackholeRadius = 20f;
-    [SerializeField] private float growSpeed = 2.0f;
-    [SerializeField] private float shrinkSpeed = 5.0f;
-    [SerializeField] private bool canGrow;
+    private float maxBlackholeRadius;
+    private float growSpeed ;
+    private float shrinkSpeed ;
+    private bool canGrow = true;
     
     [SerializeField] List<KeyCode> keyCodeList = new List<KeyCode>();
 
     [Header("Attack")]
-    [SerializeField] private float cloneAttackCoolDown = 1f;
+    [SerializeField] private float cloneAttackCoolDown;
     [SerializeField] private float cloneOffset = 2f;
     private float cloneAttackTimer;
     private bool canAttack;
-    private int amountOfAttacks = 10;
+    private int amountOfAttacks;
     private bool shouldShrink;
 
 
@@ -27,40 +27,32 @@ public class Blackhole_SkillController : MonoBehaviour
     private void Update()
     {
         cloneAttackTimer -= Time.deltaTime;
-        if(Input.GetKeyDown(KeyCode.F))
+        
+
+        if (Input.GetKeyDown(KeyCode.X))
         {
-            canGrow = true;
-        }
-        if(Input.GetKeyDown(KeyCode.X))
-        {
-            canAttack = true;
-            canGrow = false;
-            DestroyHotKeys();
+            ReleaseCloneAttack();
         }
 
-        if(canAttack && cloneAttackTimer < 0)
+        if (canAttack && cloneAttackTimer < 0)
         {
-            cloneAttackTimer = cloneAttackCoolDown;
-            int randomIndex = Random.Range(0, targets.Count);
-
-            float rand = Random.Range(0, 100);
-            float offset = rand > 50f ? -cloneOffset : cloneOffset;
-
-            SkillManager.instance.cloneSkill.CreateClone(targets[randomIndex] , new Vector2(offset,0));
-            amountOfAttacks--;
-
-            if(amountOfAttacks <= 0)
-            {
-                canAttack = false;
-                shouldShrink = true;
-
-            }
+            CloneAttackBehaviour();
         }
 
         if (canGrow && !shouldShrink)
         {
             transform.localScale = Vector2.Lerp(transform.localScale,
                 new Vector2(maxBlackholeRadius, maxBlackholeRadius), growSpeed * Time.deltaTime);
+
+            if (maxBlackholeRadius - transform.localScale.magnitude <= 0.1f)
+            {
+                /*if (targets.Count <= 0 && !canAttack)
+                {
+                    shouldShrink = true;                 
+                    PlayerManager.instance.player.ExitBlackHole();
+                    return;
+                }*/
+            }
         }
 
         if(shouldShrink)
@@ -73,13 +65,50 @@ public class Blackhole_SkillController : MonoBehaviour
         }
     }
 
+    private void CloneAttackBehaviour()
+    {        
+        cloneAttackTimer = cloneAttackCoolDown;
+        int randomIndex = Random.Range(0, targets.Count);
+
+        float rand = Random.Range(0, 100);
+        float offset = rand > 50f ? -cloneOffset : cloneOffset;
+
+        SkillManager.instance.cloneSkill.CreateClone(targets[randomIndex], new Vector2(offset, 0));
+        amountOfAttacks--;
+
+        if (amountOfAttacks <= 0)
+        {
+            canAttack = false;
+            shouldShrink = true;
+            PlayerManager.instance.player.ExitBlackHole();
+            
+        }
+    }
+
+    private void ReleaseCloneAttack()
+    {
+        canAttack = true;
+        canGrow = false;
+        DestroyHotKeys();
+        PlayerManager.instance.player.SetTransparent(true);
+    }
+
+    public void SetupBlackHole(float maxBlackHoleRadius , float growSpeed , float shrinkSpeed , float cloneAttackCoolDown , int amountOfAttacks)
+    {
+        maxBlackholeRadius = maxBlackHoleRadius;
+        this.growSpeed = growSpeed;
+        this.shrinkSpeed = shrinkSpeed;
+        this.cloneAttackCoolDown = cloneAttackCoolDown;
+        this.amountOfAttacks = amountOfAttacks;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Enemy enemy = collision.GetComponent<Enemy>();
         if(enemy != null)
         {
             enemy.FreezeTime(true);
-            targets.Add(collision.transform);
+           // targets.Add(collision.transform);
             CreateHotKey(collision);
         }
     }
