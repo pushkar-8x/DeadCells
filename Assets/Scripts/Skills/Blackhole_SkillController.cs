@@ -18,23 +18,46 @@ public class Blackhole_SkillController : MonoBehaviour
     private bool canAttack;
     private int amountOfAttacks;
     private bool shouldShrink;
+    private CircleCollider2D circleCollider2D;
+    private float blackHoleTimer;
+    private bool playerCanDisappear = true;
 
+    public List<Transform> targets = new List<Transform>();
 
-    private List<Transform> targets = new List<Transform>();
+    public bool playerCanExitState { get; private set; }
     public void AddTargetToList(Transform target) => targets.Add(target);
     private List<Blackhole_HotKey> allHotKeys = new List<Blackhole_HotKey>();
+
+    private void Awake()
+    {
+        circleCollider2D = GetComponent<CircleCollider2D>();
+        circleCollider2D.enabled = true;
+    }
 
     private void Update()
     {
         cloneAttackTimer -= Time.deltaTime;
-        
+        blackHoleTimer -= Time.deltaTime;
+
+        if(blackHoleTimer < 0f)
+        {
+            blackHoleTimer = Mathf.Infinity;
+            if(targets.Count > 0)
+            {
+                ReleaseCloneAttack();
+            }
+            else
+            {
+                FinishBlackHole();
+            }           
+        }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
             ReleaseCloneAttack();
         }
 
-        if (canAttack && cloneAttackTimer < 0)
+        if (canAttack && cloneAttackTimer < 0 && amountOfAttacks > 0)
         {
             CloneAttackBehaviour();
         }
@@ -43,16 +66,6 @@ public class Blackhole_SkillController : MonoBehaviour
         {
             transform.localScale = Vector2.Lerp(transform.localScale,
                 new Vector2(maxBlackholeRadius, maxBlackholeRadius), growSpeed * Time.deltaTime);
-
-            if (maxBlackholeRadius - transform.localScale.magnitude <= 0.1f)
-            {
-                /*if (targets.Count <= 0 && !canAttack)
-                {
-                    shouldShrink = true;                 
-                    PlayerManager.instance.player.ExitBlackHole();
-                    return;
-                }*/
-            }
         }
 
         if(shouldShrink)
@@ -78,24 +91,36 @@ public class Blackhole_SkillController : MonoBehaviour
 
         if (amountOfAttacks <= 0)
         {
-            canAttack = false;
-            shouldShrink = true;
-            PlayerManager.instance.player.ExitBlackHole();
-            
+            FinishBlackHole();
         }
+    }
+
+    private void FinishBlackHole()
+    {
+        DestroyHotKeys();
+        playerCanExitState = true;
+        canAttack = false;
+        shouldShrink = true;
     }
 
     private void ReleaseCloneAttack()
     {
+        if (targets.Count <= 0) return;
         canAttack = true;
         canGrow = false;
         DestroyHotKeys();
-        PlayerManager.instance.player.SetTransparent(true);
+        if(playerCanDisappear)
+        {
+            playerCanDisappear = false;
+            PlayerManager.instance.player.SetTransparent(true);
+        }
+        
     }
 
-    public void SetupBlackHole(float maxBlackHoleRadius , float growSpeed , float shrinkSpeed , float cloneAttackCoolDown , int amountOfAttacks)
+    public void SetupBlackHole(float maxBlackHoleRadius , float growSpeed , float shrinkSpeed , float cloneAttackCoolDown , int amountOfAttacks , float blackHoleDuration)
     {
-        maxBlackholeRadius = maxBlackHoleRadius;
+        this.maxBlackholeRadius = maxBlackHoleRadius;
+        blackHoleTimer = blackHoleDuration;
         this.growSpeed = growSpeed;
         this.shrinkSpeed = shrinkSpeed;
         this.cloneAttackCoolDown = cloneAttackCoolDown;
@@ -108,7 +133,7 @@ public class Blackhole_SkillController : MonoBehaviour
         if(enemy != null)
         {
             enemy.FreezeTime(true);
-           // targets.Add(collision.transform);
+            //targets.Add(collision.transform);
             CreateHotKey(collision);
         }
     }
@@ -139,7 +164,8 @@ public class Blackhole_SkillController : MonoBehaviour
         if (allHotKeys.Count <= 0) return;
         foreach (var hotKey in allHotKeys)
         {
-            Destroy(hotKey.gameObject);
+            Destroy(hotKey.gameObject);           
         }
+        allHotKeys.Clear();
     }
 }

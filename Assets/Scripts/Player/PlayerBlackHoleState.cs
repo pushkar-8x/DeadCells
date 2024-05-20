@@ -49,5 +49,8 @@ public class PlayerBlackHoleState : PlayerState
                     skillUsed = true;
             }
         }
+
+        if(player.skillManager.blackHoleSkill.IsBlackHoleFinished())
+            stateMachine.SwitchState(player.airState);
     }
 }

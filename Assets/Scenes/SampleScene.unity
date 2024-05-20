@@ -2354,6 +2354,7 @@ MonoBehaviour:
   keyCodeList: 7100000077000000650000007200000074000000
   cloneAttackCoolDown: 0.5
   cloneOffset: 2
+  targets: []
 --- !u!1001 &1922516469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2572,11 +2573,12 @@ MonoBehaviour:
   coolDownTime: 1
   blackHolePrefab: {fileID: 4997352358862853541, guid: 21e41beb76d90af45a8d0d9d9f4ddf8d, type: 3}
   maxBlackholeRadius: 20
+  blackHoleDuration: 4
   growSpeed: 2
   shrinkSpeed: 5
   cloneAttackCoolDown: 1
   cloneOffset: 2
-  amountOfAttacks: 10
+  amountOfAttacks: 3
 --- !u!1001 &1750351528175381164
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -110,11 +110,6 @@ public class Player : Character
         Destroy(playerSword);
     }
 
-    public void ExitBlackHole()
-    {
-        stateMachine.SwitchState(airState);
-    }
-
     private void CheckForDash()
     {
         if (IsTouchingWall()) return;

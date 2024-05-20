@@ -46,4 +46,6 @@ public class CharacterFX : MonoBehaviour
         sr.color = Color.white;
     }
 
+    
+
 }
