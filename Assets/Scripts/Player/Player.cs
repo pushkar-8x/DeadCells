@@ -95,6 +95,11 @@ public class Player : Character
         base.Update();
         stateMachine.currentState.Update();
         CheckForDash();
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            skillManager.crystalSkill.CanUseSkill();
+        }
     }
 
     #endregion
