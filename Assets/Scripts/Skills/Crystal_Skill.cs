@@ -25,10 +25,13 @@ public class Crystal_Skill : Skill
         {
             currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
             Crystal_SkillController _skillController = currentCrystal.GetComponent<Crystal_SkillController>();
-            _skillController.SetupCrystal(crystalDuration , canExplode ,explosionRange , canMove , moveSpeed , canGrow , growSpeed);
+            _skillController.SetupCrystal(crystalDuration , canExplode ,explosionRange , canMove , moveSpeed ,
+                canGrow , growSpeed , FindClosestEnemy(currentCrystal.transform));
         }
         else
         {
+            if (canMove) return;
+
             Vector2 playerPos = player.transform.position;
             player.transform.position =  currentCrystal.transform.position;
             currentCrystal.transform.position = playerPos;

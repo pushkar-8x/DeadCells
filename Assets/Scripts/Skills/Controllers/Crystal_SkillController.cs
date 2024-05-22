@@ -11,24 +11,15 @@ public class Crystal_SkillController : MonoBehaviour
     private float moveSpeed;
     private bool canGrow;
     private float growSpeed;
+    private Transform closestEnemy;
 
     private CircleCollider2D circleCollider2D => GetComponent<CircleCollider2D>();
     private Animator animator => GetComponent<Animator>();
 
 
-    private void Update()
-    {
-        crystalDuration -= Time.deltaTime;
-        if(crystalDuration <= 0)
-        {
-            FinishCrystalAbility();
-        }
-
-        if(canGrow)
-        transform.localScale = Vector2.Lerp(transform.localScale , new Vector2(explosionRange , explosionRange), growSpeed * Time.deltaTime);
-    }
+    
     public void SetupCrystal(float crystalDuration, bool canExplode,
-        float explosionRange, bool canMove, float moveSpeed, bool canGrow, float growSpeed)
+        float explosionRange, bool canMove, float moveSpeed, bool canGrow, float growSpeed ,Transform closestEnemy)
     {
         this.crystalDuration = crystalDuration;
         this.canExplode = canExplode;
@@ -37,6 +28,30 @@ public class Crystal_SkillController : MonoBehaviour
         this.moveSpeed = moveSpeed;
         this.canGrow = canGrow;
         this.growSpeed = growSpeed;
+        this.closestEnemy = closestEnemy;
+    }
+
+
+    private void Update()
+    {
+        crystalDuration -= Time.deltaTime;
+        if (crystalDuration <= 0)
+        {
+            FinishCrystalAbility();
+        }
+
+        if(canMove && closestEnemy != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, closestEnemy.position, moveSpeed * Time.deltaTime);
+            if(Vector2.Distance(transform.position, closestEnemy.position) < 0.5f)
+            {
+                FinishCrystalAbility();
+                canMove = false;
+            }
+        }
+
+        if (canGrow)
+            transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(explosionRange, explosionRange), growSpeed * Time.deltaTime);
     }
 
     public void FinishCrystalAbility()

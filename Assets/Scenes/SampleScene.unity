@@ -2660,7 +2660,7 @@ MonoBehaviour:
   explosionRange: 3
   canGrow: 0
   growSpeed: 5
-  canMove: 0
+  canMove: 1
   moveSpeed: 10
 --- !u!1001 &1750351528175381164
 PrefabInstance:
