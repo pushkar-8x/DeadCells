@@ -2586,6 +2586,13 @@ MonoBehaviour:
   clonePrefab: {fileID: 6851077799712808225, guid: 9866c77c53cec53449676bb45a257af6, type: 3}
   cloneDuration: 1.5
   canAttack: 1
+  useCloneOnDashStart: 1
+  useCloneOnDashEnd: 1
+  useCloneOnCounterAttack: 1
+  spawnDelayOnCounter: 0.5
+  canDuplicateClone: 1
+  duplicateChance: 35
+  createCrystalInsteadOfClone: 1
 --- !u!114 &1990581823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2640,7 +2647,7 @@ MonoBehaviour:
   shrinkSpeed: 5
   cloneAttackCoolDown: 1
   cloneOffset: 2
-  amountOfAttacks: 3
+  amountOfAttacks: 10
 --- !u!114 &1990581825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2656,12 +2663,21 @@ MonoBehaviour:
   coolDownTime: 1
   crystalPrefab: {fileID: 7576347404668410375, guid: a6824d0c1ea316d40b008ae47fc9b10a, type: 3}
   crystalDuration: 3
+  canSpawnCloneForCrystal: 0
   canExplode: 1
   explosionRange: 3
   canGrow: 0
   growSpeed: 5
   canMove: 1
   moveSpeed: 10
+  canSpawnMultiCrystals: 1
+  maxStackAmount: 3
+  multiCrystalCoolDown: 5
+  useTimeWindow: 2.5
+  multiCrystalsList:
+  - {fileID: 7576347404668410375, guid: a6824d0c1ea316d40b008ae47fc9b10a, type: 3}
+  - {fileID: 7576347404668410375, guid: a6824d0c1ea316d40b008ae47fc9b10a, type: 3}
+  - {fileID: 7576347404668410375, guid: a6824d0c1ea316d40b008ae47fc9b10a, type: 3}
 --- !u!1001 &1750351528175381164
 PrefabInstance:
   m_ObjectHideFlags: 0

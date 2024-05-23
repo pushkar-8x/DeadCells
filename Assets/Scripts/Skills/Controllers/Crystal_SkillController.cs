@@ -13,10 +13,12 @@ public class Crystal_SkillController : MonoBehaviour
     private float growSpeed;
     private Transform closestEnemy;
 
+    [SerializeField] private LayerMask whatIsEnemy;
+
     private CircleCollider2D circleCollider2D => GetComponent<CircleCollider2D>();
     private Animator animator => GetComponent<Animator>();
 
-
+    
     
     public void SetupCrystal(float crystalDuration, bool canExplode,
         float explosionRange, bool canMove, float moveSpeed, bool canGrow, float growSpeed ,Transform closestEnemy)
@@ -52,6 +54,16 @@ public class Crystal_SkillController : MonoBehaviour
 
         if (canGrow)
             transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(explosionRange, explosionRange), growSpeed * Time.deltaTime);
+    }
+
+    public void ChooseRandomEnemyTarget()
+    {
+        float radius = SkillManager.instance.blackHoleSkill.GetBlackHoleRadius();
+        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, radius , whatIsEnemy);
+        if (cols.Length > 0)
+        {
+            closestEnemy = cols[Random.Range(0, cols.Length)].transform;
+        }
     }
 
     public void FinishCrystalAbility()

@@ -86,7 +86,16 @@ public class Blackhole_SkillController : MonoBehaviour
         float rand = Random.Range(0, 100);
         float offset = rand > 50f ? -cloneOffset : cloneOffset;
 
-        SkillManager.instance.cloneSkill.CreateClone(targets[randomIndex], new Vector2(offset, 0));
+        if(SkillManager.instance.cloneSkill.createCrystalInsteadOfClone)
+        {
+            SkillManager.instance.crystalSkill.CreateCrystal();
+            SkillManager.instance.crystalSkill.CrystalChooseRandomTarget();
+        }
+        else
+        {
+            SkillManager.instance.cloneSkill.CreateClone(targets[randomIndex], new Vector2(offset, 0));
+        }  
+        
         amountOfAttacks--;
 
         if (amountOfAttacks <= 0)
@@ -125,6 +134,9 @@ public class Blackhole_SkillController : MonoBehaviour
         this.shrinkSpeed = shrinkSpeed;
         this.cloneAttackCoolDown = cloneAttackCoolDown;
         this.amountOfAttacks = amountOfAttacks;
+
+        if(SkillManager.instance.cloneSkill.createCrystalInsteadOfClone)
+            playerCanDisappear = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
