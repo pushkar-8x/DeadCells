@@ -7,6 +7,9 @@ public class Character : MonoBehaviour
     public Rigidbody2D rb { get; private set; }
     public Animator anim { get; private set; }
 
+    public CapsuleCollider2D capsuleCollider2D { get; private set; }
+    public CharacterStats characterStats { get; private set; }
+
     [Header("Collisions")]
     [SerializeField]protected Transform groundCheckPoint;
     [SerializeField]protected Transform wallCheckPoint;
@@ -33,7 +36,9 @@ public class Character : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         _characterFx = GetComponent<CharacterFX>();
+        characterStats = GetComponent<CharacterStats>();
     }
 
     protected virtual void Start()
@@ -66,12 +71,17 @@ public class Character : MonoBehaviour
         FlipController(xVelocity);
     }
 
-    public virtual void Damage()
+    public virtual void DamageEffects()
     {
         _characterFx.PlayFlash();
         StartCoroutine("KnockBackRoutine");
         Debug.Log("Damaged:" + gameObject.name);
 
+    }
+
+    public virtual void Die()
+    {
+        
     }
 
     public void SetTransparent(bool _transparent)

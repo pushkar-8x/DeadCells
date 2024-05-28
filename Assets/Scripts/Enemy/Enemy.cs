@@ -23,7 +23,7 @@ public class Enemy : Character
 
     private bool canBeStunned;
     private float defaultMoveSpeed;
-
+    public string lastAnimBoolName { get; private set; }
     public CharacterFX characterFX => GetComponent<CharacterFX>();
 
     public EnemyStateMachine stateMachine { get; private set; }
@@ -90,6 +90,11 @@ public class Enemy : Character
 
         }
         return false;
+    }
+
+    public virtual void AssignLastAnimBoolName(string _animBoolName)
+    {
+        lastAnimBoolName = _animBoolName;
     }
 
     public override void OnDrawGizmos()

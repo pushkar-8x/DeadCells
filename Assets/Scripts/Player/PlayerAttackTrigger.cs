@@ -18,8 +18,11 @@ public class PlayerAttackTrigger : MonoBehaviour
         foreach (Collider2D col in cols)
         {
             
-            Enemy enemy= col.GetComponent<Enemy>();
-            enemy?.Damage();           
+            EnemyStats enemyStats= col.GetComponent<EnemyStats>();
+            //enemy?.Damage();
+            //enemy?.characterStats.TakeDamage(player.characterStats.damage.GetValue());
+            if(enemyStats != null)
+            player.characterStats.ApplyDamage(enemyStats);
         }
     }
 

@@ -72,7 +72,7 @@ public class CloneSkill_Controller : MonoBehaviour
         {
 
             Enemy enemy = col.GetComponent<Enemy>();
-            enemy?.Damage();
+            enemy?.DamageEffects();
 
             if(canDuplicateClone && enemy)
             {

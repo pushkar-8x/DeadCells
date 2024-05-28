@@ -18,8 +18,10 @@ public class Skeleton_AnimationTrigger : MonoBehaviour
 
         foreach (Collider2D col in cols)
         {
-            Player player = col.GetComponent<Player>();
-            player?.Damage();
+            PlayerStats playerStats = col.GetComponent<PlayerStats>();
+            //player?.DamageEffects();
+            if (playerStats != null)
+                _skeleton.characterStats.ApplyDamage(playerStats);
         }
     }
 

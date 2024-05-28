@@ -1351,6 +1351,7 @@ GameObject:
   - component: {fileID: 946647288}
   - component: {fileID: 946647287}
   - component: {fileID: 946647289}
+  - component: {fileID: 946647290}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -1487,6 +1488,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flashMat: {fileID: 2100000, guid: b56303d9035eaeb4288d5f45d0d05213, type: 2}
   flashDuration: 0.2
+--- !u!114 &946647290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946647284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477ac9400e1de12478232f65476a4fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 0
+  maxHealth:
+    baseValue: 50
+    modifiers: 
+  strength:
+    baseValue: 0
+    modifiers: 
+  damage:
+    baseValue: 20
+    modifiers: 
 --- !u!1 &967821020
 GameObject:
   m_ObjectHideFlags: 0
@@ -2646,7 +2669,6 @@ MonoBehaviour:
   growSpeed: 2
   shrinkSpeed: 5
   cloneAttackCoolDown: 1
-  cloneOffset: 2
   amountOfAttacks: 10
 --- !u!114 &1990581825
 MonoBehaviour:

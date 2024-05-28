@@ -55,6 +55,8 @@ public class Player : Character
 
     public PlayerBlackHoleState blackHoleState { get; private set; }
 
+    public PlayerDeadState playerDeadState { get; private set; }
+
 
     public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
@@ -80,6 +82,7 @@ public class Player : Character
         aimSwordState = new PlayerAimSwordState(stateMachine,this, "AimSword");
         catchSwordState = new PlayerCatchSwordState(stateMachine, this, "CatchSword");
         blackHoleState = new PlayerBlackHoleState(stateMachine, this, "Jump");
+        playerDeadState = new PlayerDeadState(stateMachine, this, "DieMF");
 
     }
 
@@ -136,5 +139,11 @@ public class Player : Character
         yield return new WaitForSeconds(_duration);
         IsBusy = false;
     }
-   
+
+    public override void Die()
+    {
+        base.Die();
+        stateMachine.SwitchState(playerDeadState);
+    }
+
 }

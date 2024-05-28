@@ -85,7 +85,7 @@ public class Crystal_SkillController : MonoBehaviour
         foreach (Collider2D col in cols)
         {
             Enemy enemy = col.GetComponent<Enemy>();
-            enemy?.Damage();
+            enemy?.DamageEffects();
         }
     }
 

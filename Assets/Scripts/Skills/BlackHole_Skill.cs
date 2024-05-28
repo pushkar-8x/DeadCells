@@ -11,7 +11,7 @@ public class BlackHole_Skill : Skill
     [SerializeField] private float growSpeed = 2.0f;
     [SerializeField] private float shrinkSpeed = 5.0f;
     [SerializeField] private float cloneAttackCoolDown = 1f;
-    [SerializeField] private float cloneOffset = 2f;
+    //[SerializeField] private float cloneOffset = 2f;
     [SerializeField] private int amountOfAttacks = 5;
 
     Blackhole_SkillController currentBlackHole;
