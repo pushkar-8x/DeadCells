@@ -13,6 +13,11 @@ public class Stat
         return finalValue;
     }
 
+    public void SetBaseValue(int baseValue)
+    {
+        this.baseValue = baseValue;
+    }
+
     public void AddModifier(int modifier)
     {
         modifiers.Add(modifier);
