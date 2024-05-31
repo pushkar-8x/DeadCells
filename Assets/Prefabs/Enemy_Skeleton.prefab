@@ -461,13 +461,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a45a96f52aaf27144b4b673e9707101d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth:
-    baseValue: 50
-    modifiers: 
   strength:
+    baseValue: 0
+    modifiers: 
+  agility:
+    baseValue: 0
+    modifiers: 
+  intelligence:
+    baseValue: 0
+    modifiers: 
+  vitality:
     baseValue: 0
     modifiers: 
   damage:
     baseValue: 10
     modifiers: 
+  critRate:
+    baseValue: 0
+    modifiers: 
+  critDamage:
+    baseValue: 0
+    modifiers: 
+  maxHealth:
+    baseValue: 1000
+    modifiers: 
+  armor:
+    baseValue: 0
+    modifiers: 
+  evasion:
+    baseValue: 0
+    modifiers: 
+  magicResistance:
+    baseValue: 0
+    modifiers: 
+  fireDamage:
+    baseValue: 5
+    modifiers: 
+  iceDamage:
+    baseValue: 5
+    modifiers: 
+  lightningDamage:
+    baseValue: 5
+    modifiers: 
+  currentHealth: 0

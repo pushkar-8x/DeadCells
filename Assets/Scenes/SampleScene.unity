@@ -1512,8 +1512,17 @@ MonoBehaviour:
   vitality:
     baseValue: 0
     modifiers: 
+  damage:
+    baseValue: 20
+    modifiers: 
+  critRate:
+    baseValue: 99
+    modifiers: 
+  critDamage:
+    baseValue: 150
+    modifiers: 
   maxHealth:
-    baseValue: 50
+    baseValue: 1000
     modifiers: 
   armor:
     baseValue: 0
@@ -1521,10 +1530,21 @@ MonoBehaviour:
   evasion:
     baseValue: 70
     modifiers: 
-  currentHealth: 0
-  damage:
-    baseValue: 20
+  magicResistance:
+    baseValue: 1
     modifiers: 
+  fireDamage:
+    baseValue: 10
+    modifiers: 
+  iceDamage:
+    baseValue: 5
+    modifiers: 
+  lightningDamage:
+    baseValue: 1
+    modifiers: 
+  ignitionStateDuration: 5
+  ignitionDamageCoolDown: 1
+  currentHealth: 0
 --- !u!1 &967821020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,6 +1699,10 @@ PrefabInstance:
     - target: {fileID: 8109973122585449238, guid: ec29b6e016634c944bfd12a56944e7ca, type: 3}
       propertyPath: m_Name
       value: Enemy_Skeleton (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109973122585449238, guid: ec29b6e016634c944bfd12a56944e7ca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1881,6 +1905,10 @@ PrefabInstance:
     - target: {fileID: 8109973122585449238, guid: ec29b6e016634c944bfd12a56944e7ca, type: 3}
       propertyPath: m_Name
       value: Enemy_Skeleton (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109973122585449238, guid: ec29b6e016634c944bfd12a56944e7ca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
