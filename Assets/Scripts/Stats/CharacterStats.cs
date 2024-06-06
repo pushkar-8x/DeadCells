@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -39,14 +41,21 @@ public class CharacterStats : MonoBehaviour
 
     private float chilledStateTimer;
     private float shockedStateTimer;
-
+    private CharacterFX _characterFx;
     public int currentHealth;
+    public Action OnHealthChanged;
+    public int GetMaxHealthWithModifiers() => maxHealth.GetValue() + vitality.GetValue() * 5;
 
+
+    protected virtual void Awake()
+    {
+        _characterFx = GetComponent<CharacterFX>();
+    }
 
     protected virtual void Start()
     {
         critDamage.SetBaseValue(150);
-        currentHealth = maxHealth.GetValue();
+        currentHealth = GetMaxHealthWithModifiers();
     }
 
     private void Update()
@@ -73,9 +82,8 @@ public class CharacterStats : MonoBehaviour
         }
         if (ignitionDamageTimer <= 0 && isIgnited)
         {
-            Debug.Log("Burning ! " + ignitionDamage);
-            currentHealth -= ignitionDamage;
-            if(currentHealth <= 0)
+            UpdateHealthValue(ignitionDamage);
+            if (currentHealth <= 0)
             {
                 Die();
             }
@@ -100,9 +108,9 @@ public class CharacterStats : MonoBehaviour
         //targetStats.TakeDamage(totalDamage);
         ApplyMagicDamage(targetStats);
 
-        int fireDamageValue =fireDamage.GetValue();
-        int iceDamageValue =iceDamage.GetValue();
-        int lightningDamageValue =lightningDamage.GetValue();
+        int fireDamageValue = fireDamage.GetValue();
+        int iceDamageValue = iceDamage.GetValue();
+        int lightningDamageValue = lightningDamage.GetValue();
 
         if(Mathf.Max(fireDamageValue, iceDamageValue, lightningDamageValue) <= 0)
         {
@@ -174,13 +182,19 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void TakeDamage(int _damage)
     {
-        currentHealth -= _damage;
+        UpdateHealthValue(_damage);
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth.GetValue());
         Debug.Log(gameObject.name + " takes " + _damage + " damage and has " + currentHealth + " health left.");
         if (currentHealth == 0)
         {
             Die();
         }
+    }
+
+    private void UpdateHealthValue(int _damage)
+    {
+        currentHealth -= _damage;
+        OnHealthChanged?.Invoke();
     }
 
     private bool CanCrit()
@@ -218,14 +232,17 @@ public class CharacterStats : MonoBehaviour
         {
             ignitionStateTimer = ignitionStateDuration;
             this.isIgnited = isIgnited;
+            _characterFx.PlayAilmentEffects(AilmentType.Ignited , ignitionStateDuration);
         }
         if(isChilled)
         {
             this.isChilled = isChilled;
+            _characterFx.PlayAilmentEffects(AilmentType.Chilled , ignitionStateDuration);
         }
         if(isShocked)
         {
             this.isShocked = isShocked;
+            _characterFx.PlayAilmentEffects(AilmentType.Electrified , ignitionStateDuration);
         }     
         
     }

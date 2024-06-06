@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,7 +23,8 @@ public class Character : MonoBehaviour
     public float attackRadius;
     public Vector2 knockBackDirection = new Vector2(7,12);
     public float knockBackDuration = 0.5f;
-    
+
+    public Action OnFlip;
 
     public int faceDirection { get; private set; } = 1;
     private bool facingRight = true;
@@ -116,6 +118,7 @@ public class Character : MonoBehaviour
         faceDirection = -1 * faceDirection;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
+        OnFlip?.Invoke();
     }
 
     private void FlipController(float _xVel)
