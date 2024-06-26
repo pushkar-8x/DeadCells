@@ -6,6 +6,7 @@ public class PlayerCounterAttackState : PlayerState
 {
 
     private bool canCreateClone = false;
+    
     public PlayerCounterAttackState(PlayerStateMachine stateMachine, Player player, string animBoolName) : base(stateMachine, player, animBoolName)
     {
     }
@@ -26,7 +27,6 @@ public class PlayerCounterAttackState : PlayerState
     public override void Update()
     {
         base.Update();
-
         player.SetZeroVelocity();
         Collider2D[] cols = Physics2D.OverlapCircleAll(player.attackPoint.position, player.attackRadius);
 

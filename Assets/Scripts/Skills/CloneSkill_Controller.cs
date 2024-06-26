@@ -18,7 +18,7 @@ public class CloneSkill_Controller : MonoBehaviour
     private bool canDuplicateClone;
     private int facingDir = 1;
     private float duplicateChance;
-
+    private Player player;
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -44,13 +44,14 @@ public class CloneSkill_Controller : MonoBehaviour
         }
     }
 
-    public void SetupClone(Transform newTransform , float cloneDuration , bool _canAttack , Vector2 offset , Transform _closestEnemy , bool _canDuplicateClone , float _duplicateChance)
+    public void SetupClone(Transform newTransform , float cloneDuration , bool _canAttack , Vector2 offset , Transform _closestEnemy ,
+        bool _canDuplicateClone , float _duplicateChance , Player player)
     {
         if(_canAttack)
         {
             animator.SetInteger("AttackCounter", Random.Range(1, 4));
         }
-
+        this.player = player;
         transform.position = newTransform.position + (Vector3)offset;
         cloneTimer = cloneDuration;
         closestEnemy = _closestEnemy;
@@ -71,8 +72,11 @@ public class CloneSkill_Controller : MonoBehaviour
         foreach (Collider2D col in cols)
         {
 
-            Enemy enemy = col.GetComponent<Enemy>();
-            enemy?.DamageEffects();
+            EnemyStats enemy = col.GetComponent<EnemyStats>();
+            if(enemy)
+            {
+                player.characterStats.ApplyDamage(enemy);
+            }
 
             if(canDuplicateClone && enemy)
             {

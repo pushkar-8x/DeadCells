@@ -187,7 +187,7 @@ public class SwordSkill_Controller : MonoBehaviour
     {
         if (enemy != null)
         {
-            enemy?.DamageEffects();
+            player.characterStats.ApplyDamage(enemy.GetComponent<EnemyStats>());
             enemy.StartCoroutine("FreezeTimeForSeconds", freezeDuration);
         }
     }

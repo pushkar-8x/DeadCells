@@ -60,6 +60,19 @@ public class Enemy : Character
         counterImage.gameObject.SetActive(false);
     }
 
+    public override void ApplyAilmentToMovement(float _slowPercentage, float _duration)
+    {
+        moveSpeed = defaultMoveSpeed * (1 - _slowPercentage);
+        anim.speed = anim.speed * (1 - _slowPercentage);
+        Invoke(nameof(ResetAilmentEffectsToMovement), _duration);
+    }
+
+    public override void ResetAilmentEffectsToMovement()
+    {
+        base.ResetAilmentEffectsToMovement();
+        moveSpeed = defaultMoveSpeed;
+    }
+
     public void FreezeTime(bool shouldFreeze)
     {
         if(shouldFreeze)

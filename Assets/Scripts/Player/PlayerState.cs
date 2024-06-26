@@ -16,6 +16,7 @@ public class PlayerState
     protected float yInput;
     protected float stateTimer;
     protected bool triggerCalled;
+    protected bool pauseStateTimer;
 
     public PlayerState(PlayerStateMachine stateMachine, Player player, string animBoolName)
     {
@@ -34,6 +35,7 @@ public class PlayerState
 
     public virtual void Update()
     {
+        if(!pauseStateTimer)
         stateTimer -= Time.deltaTime;
 
         xInput = Input.GetAxisRaw("Horizontal");

@@ -12,7 +12,7 @@ public class Crystal_SkillController : MonoBehaviour
     private bool canGrow;
     private float growSpeed;
     private Transform closestEnemy;
-
+    private Player player;
     [SerializeField] private LayerMask whatIsEnemy;
 
     private CircleCollider2D circleCollider2D => GetComponent<CircleCollider2D>();
@@ -21,7 +21,7 @@ public class Crystal_SkillController : MonoBehaviour
     
     
     public void SetupCrystal(float crystalDuration, bool canExplode,
-        float explosionRange, bool canMove, float moveSpeed, bool canGrow, float growSpeed ,Transform closestEnemy)
+        float explosionRange, bool canMove, float moveSpeed, bool canGrow, float growSpeed ,Transform closestEnemy , Player player)
     {
         this.crystalDuration = crystalDuration;
         this.canExplode = canExplode;
@@ -31,6 +31,7 @@ public class Crystal_SkillController : MonoBehaviour
         this.canGrow = canGrow;
         this.growSpeed = growSpeed;
         this.closestEnemy = closestEnemy;
+        this.player = player;
     }
 
 
@@ -84,8 +85,9 @@ public class Crystal_SkillController : MonoBehaviour
         Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, circleCollider2D.radius);
         foreach (Collider2D col in cols)
         {
-            Enemy enemy = col.GetComponent<Enemy>();
-            enemy?.DamageEffects();
+            EnemyStats enemyStats = col.GetComponent<EnemyStats>();
+            if(enemyStats)
+                player.characterStats.ApplyMagicDamage(enemyStats);
         }
     }
 

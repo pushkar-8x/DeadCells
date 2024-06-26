@@ -31,7 +31,7 @@ public class Character : MonoBehaviour
     private bool isKnocked;
     private SpriteRenderer sr;
 
-    private CharacterFX _characterFx;
+    public CharacterFX _characterFx { get; private set; }
 
     protected virtual void Awake()
     {
@@ -51,6 +51,16 @@ public class Character : MonoBehaviour
     protected virtual void Update()
     {
 
+    }
+
+    public virtual void ApplyAilmentToMovement(float _slowPercentage , float _duration)
+    {
+
+    }
+
+    public virtual void ResetAilmentEffectsToMovement()
+    {
+        anim.speed = 1;
     }
 
     public void SetZeroVelocity()
@@ -73,23 +83,15 @@ public class Character : MonoBehaviour
         FlipController(xVelocity);
     }
 
-    public virtual void DamageEffects()
-    {
-        _characterFx.PlayFlash();
-        StartCoroutine("KnockBackRoutine");
-        Debug.Log("Damaged:" + gameObject.name);
+    public virtual void DamageEffects() => StartCoroutine(KnockBackRoutine());
 
-    }
 
     public virtual void Die()
     {
         
     }
 
-    public void SetTransparent(bool _transparent)
-    {
-        sr.color = _transparent ? Color.clear : Color.white;
-    }
+    
 
     private IEnumerator KnockBackRoutine()
     {

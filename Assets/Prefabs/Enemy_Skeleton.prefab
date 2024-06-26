@@ -817,7 +817,7 @@ MonoBehaviour:
   moveSpeed: 1.5
   idleTime: 2
   attackDistance: 2
-  attackCooldown: 2
+  attackCooldown: 5
   battleTime: 5
   maxAgroRange: 10
   lastTimeAttacked: 0
@@ -842,23 +842,20 @@ MonoBehaviour:
   flashMat: {fileID: 2100000, guid: b56303d9035eaeb4288d5f45d0d05213, type: 2}
   ailmentData:
   - ailmentType: 1
-    duration: 0
     image: {fileID: -809361918, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
     effectColors:
     - {r: 0.7924528, g: 0.20558919, b: 0.20558919, a: 1}
     - {r: 0.8490566, g: 0.68485224, b: 0.68485224, a: 1}
   - ailmentType: 0
-    duration: 0
     image: {fileID: 59983994, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
     effectColors:
     - {r: 0.24296904, g: 0.25405878, b: 0.7924528, a: 1}
     - {r: 0.6850303, g: 0.6877365, b: 0.8113208, a: 1}
   - ailmentType: 2
-    duration: 0
     image: {fileID: -1470902421, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
     effectColors:
     - {r: 0.6577438, g: 0.7830189, b: 0.2031417, a: 1}
-    - {r: 0.11926433, g: 0.122641504, b: 0.10702207, a: 1}
+    - {r: 0.7636503, g: 0.8207547, b: 0.59233713, a: 1}
   flashDuration: 0.2
   ailmentImage: {fileID: 769422246794550559}
 --- !u!114 &8050122488245172398
@@ -906,17 +903,18 @@ MonoBehaviour:
   magicResistance:
     baseValue: 0
     modifiers: 
-  fireDamage:
+  fireDamageStat:
     baseValue: 5
     modifiers: 
-  iceDamage:
+  iceDamageStat:
     baseValue: 5
     modifiers: 
-  lightningDamage:
+  lightningDamageStat:
     baseValue: 5
     modifiers: 
-  ignitionStateDuration: 5
+  ailmentStateDuration: 5
   ignitionDamageCoolDown: 1
+  lightningBoltPrefab: {fileID: 4723567953299366384, guid: b679c081377c76048b4949f95feef368, type: 3}
   currentHealth: 0
 --- !u!1 &8613499293453657547
 GameObject:

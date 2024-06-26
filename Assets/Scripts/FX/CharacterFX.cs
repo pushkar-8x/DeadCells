@@ -73,10 +73,15 @@ public class CharacterFX : MonoBehaviour
         sr.color = Color.white;
     }
 
+    public void SetTransparent(bool _transparent)
+    {
+        sr.color = _transparent ? Color.clear : Color.white;
+    }
+
     public void PlayAilmentEffects(AilmentType _ailmentType , float _duration)
     {
         AilmentData currentAilmentData = GetAilmentData(_ailmentType);
-        StopCoroutine(nameof(BlinkSprite));
+       StopCoroutine(nameof(BlinkSprite));
         StartCoroutine(BlinkSprite(currentAilmentData ,_duration));
     }
 
@@ -103,7 +108,7 @@ public class CharacterFX : MonoBehaviour
             sr.color = ailmentData.effectColors[colorIndex];
             colorIndex = (colorIndex + 1) % 2; // Toggle between 0 and 1
             yield return new WaitForSeconds(0.2f); // Change color every 0.5 seconds
-            elapsed += 0.5f;
+            elapsed += 0.2f;
         }
         ailmentImage.enabled = false;
         // Reset the color to the original color or the first color in the array

@@ -71,7 +71,7 @@ public class Crystal_Skill : Skill
         currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
         Crystal_SkillController _skillController = currentCrystal.GetComponent<Crystal_SkillController>();
         _skillController.SetupCrystal(crystalDuration, canExplode, explosionRange, canMove, moveSpeed,
-            canGrow, growSpeed, FindClosestEnemy(currentCrystal.transform));
+            canGrow, growSpeed, FindClosestEnemy(currentCrystal.transform) , player);
     }
 
     private bool CanUseMultiCrystal()
@@ -91,7 +91,7 @@ public class Crystal_Skill : Skill
                 GameObject newCrystal = Instantiate(crystal, player.transform.position, Quaternion.identity);
                 multiCrystalsList.Remove(crystal);
                 newCrystal.GetComponent<Crystal_SkillController>().SetupCrystal(crystalDuration, canExplode, explosionRange, canMove, moveSpeed,
-                canGrow, growSpeed, FindClosestEnemy(newCrystal.transform));
+                canGrow, growSpeed, FindClosestEnemy(newCrystal.transform),player);
 
                 if(multiCrystalsList.Count <= 0)
                 {

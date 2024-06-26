@@ -21,6 +21,10 @@ public class Player : Character
     public float swordCatchImpact = 7f;
 
 
+    private float defaultMoveSpeed;
+    private float defaultJumpForce;
+    private float defaultDashSpeed;
+
     #endregion
 
 
@@ -91,6 +95,10 @@ public class Player : Character
         base.Start();
         skillManager = SkillManager.instance;
         stateMachine.Initialise(idleState);
+
+        defaultMoveSpeed = MoveSpeed;
+        defaultJumpForce = JumpForce;
+        defaultDashSpeed = dashSpeed;
     }
 
     protected override void Update()
@@ -106,6 +114,24 @@ public class Player : Character
     }
 
     #endregion
+
+    public override void ApplyAilmentToMovement(float _slowPercentage, float _duration)
+    {
+        MoveSpeed = defaultMoveSpeed * (1 - _slowPercentage);
+        JumpForce = defaultJumpForce * (1 - _slowPercentage);
+        dashSpeed = defaultDashSpeed * (1 - _slowPercentage);
+        anim.speed = anim.speed * (1 - _slowPercentage);
+        Invoke(nameof(ResetAilmentEffectsToMovement), _duration);
+
+    }
+
+    public override void ResetAilmentEffectsToMovement()
+    {
+        base.ResetAilmentEffectsToMovement();
+        MoveSpeed = defaultMoveSpeed;
+        JumpForce = defaultJumpForce;
+        dashSpeed = defaultDashSpeed;
+    }
 
     public void AssignSword(GameObject sword)
     {
