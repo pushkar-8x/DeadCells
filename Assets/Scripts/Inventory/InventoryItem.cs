@@ -7,6 +7,8 @@ public class InventoryItem
     public ItemData _itemData;
     public int stackSize;
     private int maxStackSize = 10;
+
+    public Itemslot_UI itemSlotUI;
     public InventoryItem(ItemData _itemData)
     {
         this._itemData = _itemData;
