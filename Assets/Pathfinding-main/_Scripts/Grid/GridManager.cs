@@ -16,7 +16,7 @@ namespace Tarodev_Pathfinding._Scripts.Grid {
         [SerializeField] private bool _drawConnections;
 
         public Dictionary<Vector2, NodeBase> Tiles { get; private set; }
-
+        public List<NodeBase> cornerTiles;
         private NodeBase _playerNodeBase, _goalNodeBase;
         private Unit _spawnedPlayer, _spawnedGoal;
 
@@ -35,11 +35,12 @@ namespace Tarodev_Pathfinding._Scripts.Grid {
 
         private void OnTileHover(NodeBase nodeBase) {
             _goalNodeBase = nodeBase;
-            _spawnedGoal.transform.position = _goalNodeBase.Coords.Pos;
-
+           // _spawnedGoal.transform.position = _goalNodeBase.Coords.Pos;
+            nodeBase.Init(false,_goalNodeBase.Coords);
             foreach (var t in Tiles.Values) t.RevertTile();
 
-            var path = Pathfinding.FindPath(_playerNodeBase, _goalNodeBase);
+            var (shortestPath, closestTarget) = Pathfinding.FindShortestPath(_playerNodeBase, cornerTiles);
+            closestTarget.Init(true,closestTarget.Coords);
         }
 
         void SpawnUnits() {

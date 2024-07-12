@@ -12,7 +12,8 @@ namespace Tarodev_Pathfinding._Scripts.Grid.Scriptables {
         
         public override Dictionary<Vector2, NodeBase> GenerateGrid() {
             var tiles = new Dictionary<Vector2, NodeBase>();
-            var cornertiles = new Dictionary<Vector2, NodeBase>();
+            var cornertiles = GridManager.Instance.cornerTiles;
+            cornertiles.Clear();
             var grid = new GameObject {
                 name = "Grid"
             };
@@ -22,7 +23,7 @@ namespace Tarodev_Pathfinding._Scripts.Grid.Scriptables {
                     var tile = Instantiate(nodeBasePrefab,grid.transform);
                     if (IsCornerTile(q, r, _gridWidth, _gridDepth)) {
                         tile.Init(false ,new HexCoords(q,r));
-                        cornertiles.Add(tile.Coords.Pos, tile);
+                        cornertiles.Add(tile);
                     }
                     else
                     {
